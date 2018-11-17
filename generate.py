@@ -26,6 +26,7 @@ scales = {
     "lydic" : lydicIntervals,
     "ionic" : ionicIntervals,
     "doric" : doricIntervals,
+    "dorian"  : doricIntervals,
     "chromatic": chromaticIntervals
 }
 
