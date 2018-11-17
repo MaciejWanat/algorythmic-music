@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 
 import random
+import sys
 
 output = ""
+isValid = True
+withDrums = False
 
 CPhrygian = ["c", "df", "ef", "g", "af", "bf"]
 CLydic = ["c", "d", "e", "fs", "g", "a", "b"]
+
+scales = { 
+    "phrygian": CPhrygian,
+    "lydic": CLydic 
+    }
 
 allowedOctaves = ["3", "4", "5"]
 allowedRythmic = ["qn", "en", "sn"]
@@ -50,9 +58,18 @@ def generateMusic(scale, withDrums):
 
     return output    
 
-output = generateMusic(CLydic, True)
+if sys.argv[1].lower() not in scales:
+    print("> Scale not found")
+    isValid = False
 
-with open("music.hs", "w") as musicFile:
-    musicFile.write(output)
+if (isValid):
+    scale = scales[sys.argv[1].lower()]
+    if sys.argv[2].lower() == "true":
+        withDrums = True
 
-print("Music file generated to file: music.hs")
+    output = generateMusic(scale, withDrums)
+
+    with open("music.hs", "w") as musicFile:
+        musicFile.write(output)
+
+    print("> Music file generated to file: music.hs")
