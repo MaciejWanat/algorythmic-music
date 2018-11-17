@@ -32,18 +32,13 @@ scales = {
     "chromatic": chromaticIntervals
 }
 
-allowedOctaves = ["3", "4", "5"]
-allowedRythmic = ["qn", "en", "sn"]
-
-soundOrPause = ["sound", "sound", "sound", "pause"]
-
 drums = "\n\ncrash2 = perc CrashCymbal2  qn\n\
 snare = perc AcousticSnare en\n\
 bassDrum = perc AcousticBassDrum qn\n\
 hihat = perc ClosedHiHat qn\n\n\
 percTact = times 2 ((bassDrum :=: (hihat :+: hihat)) :+: (snare :=: (hihat :+: hihat)))"
 
-def generateMelody(scale, length):
+def generateMelody(scale, length, allowedOctaves, allowedRythmic, soundOrPause):
     melody = ""
     i = 0
     while (i < length):
@@ -61,13 +56,17 @@ def generateMelody(scale, length):
     melody = melody[:-5]
     return melody
 
-# Caomposition 1: Short melody, short start, longer mid, short end
+# Composition 1: Short melody, short start, longer mid, short end
 def generateComposition1(scale, withDrums):
     output = ""
 
-    output += "\nmelody1 = " + generateMelody(scale, 7)
-    output += "\nmelody2 = " + generateMelody(scale, 10)
-    output += "\nmelody3 = " + generateMelody(scale, 7)
+    allowedOctaves = ["3", "4", "5"]
+    allowedRythmic = ["qn", "en", "sn"]
+    soundOrPause = ["sound", "sound", "sound", "pause"]
+
+    output += "\nmelody1 = " + generateMelody(scale, 7, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody2 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody3 = " + generateMelody(scale, 7, allowedOctaves, allowedRythmic, soundOrPause)
 
     if (withDrums):
         output += drums
@@ -77,8 +76,52 @@ def generateComposition1(scale, withDrums):
 
     return output
 
+# Composition 2: ABABCB
+def generateComposition2(scale, withDrums):
+    output = ""
+
+    allowedOctaves = ["3", "4", "5"]
+    allowedRythmic = ["qn", "en", "sn"]
+    soundOrPause = ["sound", "sound", "sound", "pause"]
+
+    output += "\nmelody1 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody2 = " + generateMelody(scale, 5, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody3 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody4 = " + generateMelody(scale, 7, allowedOctaves, allowedRythmic, soundOrPause)
+
+    if (withDrums):
+        output += drums
+        output += "\n\nmusic = (times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)) :=: tempo 2 (times 25 percTact)"
+    else:
+        output += "\n\nmusic = times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)"
+    
+    return output
+
+# Composition 3: ABABCB, 50% pauses
+def generateComposition3(scale, withDrums):
+    output = ""
+
+    allowedOctaves = ["3", "4", "5"]
+    allowedRythmic = ["qn", "en", "sn"]
+    soundOrPause = ["sound", "pause"]
+
+    output += "\nmelody1 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody2 = " + generateMelody(scale, 5, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody3 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody4 = " + generateMelody(scale, 7, allowedOctaves, allowedRythmic, soundOrPause)
+
+    if (withDrums):
+        output += drums
+        output += "\n\nmusic = (times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)) :=: tempo 2 (times 25 percTact)"
+    else:
+        output += "\n\nmusic = times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)"
+    
+    return output
+
 compositions = {
-    1: generateComposition1
+    1: generateComposition1,
+    2: generateComposition2,
+    3: generateComposition3
 }
 
 def generateMusic(scale, withDrums, compositionNumber):
@@ -118,8 +161,9 @@ if compositionNumber not in compositions:
     isValid = False    
 
 if (isValid):
-    if sys.argv[4].lower() == "true":
-        withDrums = True
+    if len(sys.argv) >= 5:
+        if sys.argv[4] == "true":
+            withDrums = True
 
     scale = generateScale(sys.argv[2], scales[sys.argv[1].lower()])
     print("> Generated scale: ", scale)

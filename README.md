@@ -7,7 +7,7 @@ Usage:
 python generate.py phrygian c 1 true
 ```
 
-Where first argument indicates a scale, the second is a mode, third one is a pattern number, fourth indicates wheter to generate music with a drum track.
+Where first argument indicates a scale, the second is a mode, third one is a pattern number, fourth indicates wheter to generate music with a drum track. Last one is optional and default is false.
 
 Available scales:
 * phrygian
