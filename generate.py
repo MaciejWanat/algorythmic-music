@@ -58,8 +58,10 @@ def generateMelody(scale, length):
     melody = melody[:-5]
     return melody
 
-def generateMusic(scale, withDrums):
-    output = "import Euterpea\n"
+# Caomposition 1: Short melody, short start, longer mid, short end
+def generateComposition1(scale, withDrums):
+    output = ""
+
     output += "\nmelody1 = " + generateMelody(scale, 7)
     output += "\nmelody2 = " + generateMelody(scale, 10)
     output += "\nmelody3 = " + generateMelody(scale, 7)
@@ -70,6 +72,15 @@ def generateMusic(scale, withDrums):
     else:
         output += "\n\nmusic = times 4 melody1 :+: times 4 melody2 :+: times 4 melody3"
 
+    return output
+
+compositions = {
+    1: generateComposition1
+}
+
+def generateMusic(scale, withDrums, compositionNumber):
+    output = "import Euterpea\n"
+    output += compositions[compositionNumber](scale, withDrums)
     return output    
 
 def generateScale(sound, scale):
@@ -98,15 +109,20 @@ if sys.argv[2].lower() not in chromatic:
     print("> Base sound not found")
     isValid = False        
 
+compositionNumber = int(sys.argv[3])
+if compositionNumber not in compositions:
+    print("> Composition number ", int(sys.argv[3]), " not found")
+    isValid = False    
+
 if (isValid):
-    if sys.argv[3].lower() == "true":
+    if sys.argv[4].lower() == "true":
         withDrums = True
 
     scale = generateScale(sys.argv[2], scales[sys.argv[1].lower()])
     print("> Generated scale: ", scale)
-    output = generateMusic(scale, withDrums)
-
+    output = generateMusic(scale, withDrums, compositionNumber)
+    print("> Generated music with pattern", compositionNumber, ", in key", sys.argv[2].upper(), sys.argv[1].lower())
     with open("music.hs", "w") as musicFile:
         musicFile.write(output)
 
-    print("> Music generated to file: music.hs")
+    print("> Saved to file: music.hs")
