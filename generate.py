@@ -76,29 +76,8 @@ def generateComposition1(scale, withDrums):
 
     return output
 
-# Composition 2: ABABCB
+# Composition 2: ABABCB, 50% pauses
 def generateComposition2(scale, withDrums):
-    output = ""
-
-    allowedOctaves = ["3", "4", "5"]
-    allowedRythmic = ["qn", "en", "sn"]
-    soundOrPause = ["sound", "sound", "sound", "pause"]
-
-    output += "\nmelody1 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
-    output += "\nmelody2 = " + generateMelody(scale, 5, allowedOctaves, allowedRythmic, soundOrPause)
-    output += "\nmelody3 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
-    output += "\nmelody4 = " + generateMelody(scale, 7, allowedOctaves, allowedRythmic, soundOrPause)
-
-    if (withDrums):
-        output += drums
-        output += "\n\nmusic = (times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)) :=: tempo 2 (times 25 percTact)"
-    else:
-        output += "\n\nmusic = times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)"
-    
-    return output
-
-# Composition 3: ABABCB, 50% pauses
-def generateComposition3(scale, withDrums):
     output = ""
 
     allowedOctaves = ["3", "4", "5"]
@@ -112,7 +91,7 @@ def generateComposition3(scale, withDrums):
 
     if (withDrums):
         output += drums
-        output += "\n\nmusic = (times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)) :=: tempo 2 (times 25 percTact)"
+        output += "\n\nmusic = (times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)) :=: tempo 2 (times 20 percTact)"
     else:
         output += "\n\nmusic = times 2 (times 4 melody1 :+: times 4 melody2) :+: (times 2 melody3) :+: (times 4 melody2)"
     
@@ -120,8 +99,7 @@ def generateComposition3(scale, withDrums):
 
 compositions = {
     1: generateComposition1,
-    2: generateComposition2,
-    3: generateComposition3
+    2: generateComposition2
 }
 
 def generateMusic(scale, withDrums, compositionNumber):
