@@ -10,7 +10,13 @@ CLydic = ["c", "d", "e", "fs", "g", "a", "b"]
 allowedOctaves = ["3", "4", "5"]
 allowedRythmic = ["qn", "en", "sn"]
 
-soundOrPause = ["sound", "sound", "pause"]
+soundOrPause = ["sound", "sound", "sound", "pause"]
+
+drums = "\ncrash2 = perc CrashCymbal2  qn\n\
+snare = perc AcousticSnare en\n\
+bassDrum = perc AcousticBassDrum qn\n\
+hihat = perc ClosedHiHat qn\n\n\
+percTact = times 2 ((bassDrum :=: (hihat :+: hihat)) :+: (snare :=: (hihat :+: hihat)))"
 
 def generateMelody(scale, length):
     melody = ""
@@ -30,15 +36,21 @@ def generateMelody(scale, length):
     melody = melody[:-5]
     return melody
 
-def generateMusic(scale):
+def generateMusic(scale, withDrums):
     output = "import Euterpea\n"
-    output += "\nmelody1 = " + generateMelody(scale, 10)
+    output += "\nmelody1 = " + generateMelody(scale, 7)
     output += "\nmelody2 = " + generateMelody(scale, 10)
-    output += "\nmelody3 = " + generateMelody(scale, 10)
-    output += "\nmusic = times 4 melody1 :+: times 4 melody2 :+: times 4 melody3"
+    output += "\nmelody3 = " + generateMelody(scale, 7)
+
+    if (withDrums):
+        output += drums
+        output += "\n\nmusic = (times 4 melody1 :+: times 4 melody2 :+: times 4 melody3) :=: (times 8 percTact)"
+    else:
+        output += "\n\nmusic = times 4 melody1 :+: times 4 melody2 :+: times 4 melody3"
+
     return output    
 
-output = generateMusic(CLydic)
+output = generateMusic(CLydic, True)
 
 with open("music.hs", "w") as musicFile:
     musicFile.write(output)
