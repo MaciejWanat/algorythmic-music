@@ -20,7 +20,7 @@ allowedRythmic = ["qn", "en", "sn"]
 
 soundOrPause = ["sound", "sound", "sound", "pause"]
 
-drums = "\ncrash2 = perc CrashCymbal2  qn\n\
+drums = "\n\ncrash2 = perc CrashCymbal2  qn\n\
 snare = perc AcousticSnare en\n\
 bassDrum = perc AcousticBassDrum qn\n\
 hihat = perc ClosedHiHat qn\n\n\
