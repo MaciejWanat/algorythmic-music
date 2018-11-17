@@ -7,13 +7,27 @@ output = ""
 isValid = True
 withDrums = False
 
-CPhrygian = ["c", "df", "ef", "g", "af", "bf"]
-CLydic = ["c", "d", "e", "fs", "g", "a", "b"]
+chromatic = ["c", "cs", "d", "ds", "e", "f", "fs", "g", "gs", "a", "as", "b"]
+chromaticLooped = chromatic + chromatic
+baseChromatic = ["c", "d", "e", "f", "g", "a", "h"] 
 
-scales = { 
-    "phrygian": CPhrygian,
-    "lydic": CLydic 
-    }
+# w - whole tone, h - half tone
+phrygianIntervals = ["h", "w", "w", "w", "h", "w"]
+lydicIntervals = ["w", "w", "w", "h", "w", "w"]
+ionicIntervals = ["w", "w", "h", "w", "w", "w"]
+doricIntervals = ["w", "h", "w", "w", "w", "h"]
+chromaticIntervals = ["h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h"]
+
+aeolianIntervals = ["w", "h", "w", "w", "w", "h"]
+mixolydianIntervals = ["w", "w", "h", "w", "w", "w"]
+
+scales = {
+    "phrygian": phrygianIntervals,
+    "lydic" : lydicIntervals,
+    "ionic" : ionicIntervals,
+    "doric" : doricIntervals,
+    "chromatic": chromaticIntervals
+}
 
 allowedOctaves = ["3", "4", "5"]
 allowedRythmic = ["qn", "en", "sn"]
@@ -58,18 +72,41 @@ def generateMusic(scale, withDrums):
 
     return output    
 
+def generateScale(sound, scale):
+    chromaIter = iter(chromaticLooped)
+
+    currItem = next(chromaIter)
+    while(currItem != sound):
+        currItem = next(chromaIter)
+    
+    result = [currItem]
+    for interval in scale:
+        if interval == "w":
+            next(chromaIter)
+            currItem = next(chromaIter)
+        if interval == "h":
+            currItem = next(chromaIter)
+        result.append(currItem)
+
+    return result
+
 if sys.argv[1].lower() not in scales:
     print("> Scale not found")
     isValid = False
 
+if sys.argv[2].lower() not in chromatic:
+    print("> Base sound not found")
+    isValid = False        
+
 if (isValid):
-    scale = scales[sys.argv[1].lower()]
-    if sys.argv[2].lower() == "true":
+    if sys.argv[3].lower() == "true":
         withDrums = True
 
+    scale = generateScale(sys.argv[2], scales[sys.argv[1].lower()])
+    print("> Generated scale: ", scale)
     output = generateMusic(scale, withDrums)
 
     with open("music.hs", "w") as musicFile:
         musicFile.write(output)
 
-    print("> Music file generated to file: music.hs")
+    print("> Music generated to file: music.hs")
