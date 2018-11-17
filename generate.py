@@ -52,7 +52,7 @@ def generateMusic(scale, withDrums):
 
     if (withDrums):
         output += drums
-        output += "\n\nmusic = (times 4 melody1 :+: times 4 melody2 :+: times 4 melody3) :=: (times 8 percTact)"
+        output += "\n\nmusic = (times 4 melody1 :+: times 4 melody2 :+: times 4 melody3) :=: tempo 2 (times 12 percTact)"
     else:
         output += "\n\nmusic = times 4 melody1 :+: times 4 melody2 :+: times 4 melody3"
 
