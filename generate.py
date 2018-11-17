@@ -16,10 +16,10 @@ phrygianIntervals = ["h", "w", "w", "w", "h", "w"]
 lydicIntervals = ["w", "w", "w", "h", "w", "w"]
 ionicIntervals = ["w", "w", "h", "w", "w", "w"]
 doricIntervals = ["w", "h", "w", "w", "w", "h"]
-chromaticIntervals = ["h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h"]
+aeolianIntervals = ["w", "h", "w", "w", "h", "w"]
+mixolydianIntervals = ["w", "w", "h", "w", "w", "h"]
 
-aeolianIntervals = ["w", "h", "w", "w", "w", "h"]
-mixolydianIntervals = ["w", "w", "h", "w", "w", "w"]
+chromaticIntervals = ["h", "h", "h", "h", "h", "h", "h", "h", "h", "h", "h"]
 
 scales = {
     "phrygian": phrygianIntervals,
@@ -27,6 +27,8 @@ scales = {
     "ionic" : ionicIntervals,
     "doric" : doricIntervals,
     "dorian"  : doricIntervals,
+    "aeolian" : aeolianIntervals,
+    "mixolydian" : mixolydianIntervals,
     "chromatic": chromaticIntervals
 }
 

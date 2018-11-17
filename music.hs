@@ -1,8 +1,8 @@
 import Euterpea
 
-melody1 = rest en :+: cs 5 sn :+: f 4 sn :+: rest sn :+: cs 3 qn :+: as 5 en :+: ds 3 en
-melody2 = c 5 en :+: rest en :+: rest qn :+: c 5 qn :+: cs 5 qn :+: f 3 en :+: rest en :+: ds 5 qn :+: ds 3 qn :+: as 3 sn
-melody3 = ds 3 en :+: rest en :+: f 4 sn :+: g 3 en :+: f 5 en :+: cs 5 qn :+: c 3 qn
+melody1 = ds 3 sn :+: g 3 qn :+: rest sn :+: as 5 en :+: as 4 qn :+: rest sn :+: gs 5 qn
+melody2 = c 3 sn :+: rest en :+: gs 3 en :+: rest qn :+: as 5 en :+: g 3 sn :+: rest en :+: rest sn :+: f 4 qn :+: cs 4 sn
+melody3 = as 4 en :+: c 4 qn :+: cs 3 sn :+: g 4 qn :+: gs 3 qn :+: ds 5 qn :+: cs 4 qn
 
 crash2 = perc CrashCymbal2  qn
 snare = perc AcousticSnare en
