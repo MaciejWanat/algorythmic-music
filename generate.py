@@ -76,18 +76,19 @@ def generateComposition1(scale, withDrums):
 
     return output
 
-# Composition 2: ABABCB, 50% pauses
+# Composition 2: ABABCA, 50% pauses
 def generateComposition2(scale, withDrums):
     output = ""
 
-    allowedOctaves = ["3", "4", "5"]
+    allowedOctaves1 = ["4"]
+    allowedOctaves2 = ["5"]
+    allowedOctaves3 = ["3"]
     allowedRythmic = ["qn", "en", "sn"]
     soundOrPause = ["sound", "pause"]
 
-    output += "\nmelody1 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
-    output += "\nmelody2 = " + generateMelody(scale, 5, allowedOctaves, allowedRythmic, soundOrPause)
-    output += "\nmelody3 = " + generateMelody(scale, 10, allowedOctaves, allowedRythmic, soundOrPause)
-    output += "\nmelody4 = " + generateMelody(scale, 7, allowedOctaves, allowedRythmic, soundOrPause)
+    output += "\nmelody1 = " + generateMelody(scale, 10, allowedOctaves1, allowedRythmic, soundOrPause)
+    output += "\nmelody2 = " + generateMelody(scale, 5, allowedOctaves2, allowedRythmic, soundOrPause)
+    output += "\nmelody3 = " + generateMelody(scale, 7, allowedOctaves3, allowedRythmic, soundOrPause)
 
     if (withDrums):
         output += drums
@@ -97,9 +98,32 @@ def generateComposition2(scale, withDrums):
     
     return output
 
+# Composition 3: AABB_ABB_C_BB, 50% pauses
+def generateComposition3(scale, withDrums):
+    output = ""
+
+    allowedOctaves1 = ["4"]
+    allowedOctaves2 = ["5"]
+    allowedOctaves3 = ["3"]
+    allowedRythmic = ["qn", "en", "sn"]
+    soundOrPause = ["sound", "pause"]
+
+    output += "\nmelody1 = " + generateMelody(scale, 10, allowedOctaves1, allowedRythmic, soundOrPause)
+    output += "\nmelody2 = " + generateMelody(scale, 7, allowedOctaves2, allowedRythmic, soundOrPause)
+    output += "\nmelody3 = " + generateMelody(scale, 7, allowedOctaves3, allowedRythmic, soundOrPause)
+
+    if (withDrums):
+        output += drums
+        output += "\n\nmusic = (times 2 (times 8 melody1 :+: times 8 melody2) :+: (times 4 melody1) :+: (times 8 melody2) :+: (times 2 melody3) :+: (times 8 melody2)) :=: tempo 2 (times 30 percTact)"
+    else:
+        output += "\n\nmusic = times 2 (times 8 melody1 :+: times 8 melody2) :+: (times 4 melody1) :+: (times 8 melody2) :+: (times 2 melody3) :+: (times 8 melody2)"
+    
+    return output
+
 compositions = {
     1: generateComposition1,
-    2: generateComposition2
+    2: generateComposition2,
+    3: generateComposition3
 }
 
 def generateMusic(scale, withDrums, compositionNumber):
