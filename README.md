@@ -14,3 +14,6 @@ Available scales:
 * lydic
 * ionic
 * doric
+* aeolian
+* mixolydian
+* chromatic
